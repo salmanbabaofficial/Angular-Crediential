@@ -1,0 +1,35 @@
+
+label{
+  margin-top: 10px;
+}
+
+label.gender-label {
+  margin-right: 7px;
+}
+
+button {
+    width: 100%;
+    height: 45px;
+  }
+  
+   a {
+    text-decoration: none;
+    color: #007bff !important; 
+   } 
+  
+  .box1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } 
+  
+  .box2 .img1 {
+    width: 100%;
+    height: 100vh; 
+  } 
+  form{
+    flex: 1;
+  }
+  
+  
+  

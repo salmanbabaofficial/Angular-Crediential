@@ -1,0 +1,16 @@
+<div class="dashboard-container">
+  <h1>Welcome to your Google Dashboard</h1>
+  <div class="user-data-container">
+    <div>Welcome,
+      <h2>{{ userProfile.given_name }} {{ userProfile.family_name }}</h2>
+    </div>
+    <div class="profile-photo">
+      <img class="profile-picture" src="{{userProfile.picture}}" alt="Profile Picture">
+    </div>
+    <p>UserID: <span id="userId">{{ userProfile.sub }}</span></p>
+    <p>User Name: <span id="userName">{{ userProfile.name }}</span></p>
+    <p>Email: <span id="userEmail">{{ userProfile.email }}</span></p>
+
+  </div>
+  <button class="sign-out-btn btn btn-danger" (click)="handleSignOut()">Sign Out</button>
+</div>

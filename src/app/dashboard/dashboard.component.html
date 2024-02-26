@@ -1,0 +1,174 @@
+<button class=" btn btn-primary saveAll" (click)="saveAll()">Save All</button>
+
+<div class="container mt-4 ">
+  <table class="table table-bordered font-family-sans-serif">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">User Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Education</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of userData">
+        <td>{{user.id}}</td>
+        <td>
+          <ng-container *ngIf="!user.editMode; else userNameEditModeTemplate">
+            {{user.user_name}}
+          </ng-container>
+          <ng-template #userNameEditModeTemplate>
+            <input type="text" [(ngModel)]="user.user_name" name="userName" #userName="ngModel" required minlength="3">
+            <div *ngIf="userName.invalid && (userName.dirty || userName.touched)">
+              <small class="text-danger" *ngIf="userName.errors?.['required']">Name is required.</small>
+              <small class="text-danger" *ngIf="userName.errors?.['minlength']">Name must be at least 3
+                characters.</small>
+            </div>
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="!user.editMode; else emailEditModeTemplate">
+            {{user.email}}
+          </ng-container>
+          <ng-template #emailEditModeTemplate>
+            <input type="email" id="email" name="email" placeholder="Enter your email"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}" [(ngModel)]="user.email" required
+              #email="ngModel" />
+            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+              <small class="text-danger" *ngIf="email.errors?.['required']">Email is required.</small>
+              <small class="text-danger" *ngIf="email.errors?.['pattern']">Invalid email format</small>
+            </div>
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="!user.editMode; else genderEditModeTemplate">
+            {{user.gender}}
+          </ng-container>
+          <ng-template #genderEditModeTemplate>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" required id="male" value="male"
+                [(ngModel)]="user.gender">
+              <label class="form-check-label" for="male">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" required id="female" value="female"
+                [(ngModel)]="user.gender">
+              <label class="form-check-label" for="female">Female</label>
+            </div>
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="!user.editMode; else educationEditModeTemplate">
+            {{user.education}}
+          </ng-container>
+          <ng-template #educationEditModeTemplate>
+            <select class="form-select" id="education" name="education" aria-label="Default select example"
+              [(ngModel)]="user.education" #education="ngModel" required>
+              <option value="" disabled selected>Select Education...</option>
+              <option *ngFor="let education of educationList" [value]="education">{{education}}</option>
+            </select>
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="!user.editMode; else editActionsTemplate">
+            <a style="color: #3F51B5 ;  font-size: 19px;" (click)="toggleEditMode(user)"><i
+                class="fa-sharp fa-solid fa-pen"></i></a>
+
+          </ng-container>
+          <ng-template #editActionsTemplate>
+            <button class="inlineButton" style="color: #3F51B5; font-size: 19px;" [disabled]="updateForm.invalid"
+              (click)="updateUser(user)">
+              <i class="fa-solid fa-circle-check"></i>
+
+            </button>
+            <a (click)="cancelEdit(user)" style="color:#F44336 ;  font-size: 19px;"><i
+                class="fa-solid fa-xmark"></i></a>
+            <!-- <mat-icon style="color:#F44336" (click)="cancelEdit(user)">cancel</mat-icon> -->
+          </ng-template>
+
+
+          <a type="button" class="btn btn-primary" id="editbtn" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Edit</a> &nbsp;
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Update Details</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form #updateForm="ngForm">
+                    <div class="mb-3 d-none">
+                      <label class="form-label">User ID</label>
+                      <input type="text" class="form-control" id="userId" name="userId" placeholder="userId"
+                        [(ngModel)]="user.id" required #name="ngModel" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">User Name</label>
+                      <input type="text" class="form-control" id="username" name="username" minlength="3"
+                        placeholder="Username" [(ngModel)]="user.user_name" required #name="ngModel" />
+                      <div *ngIf="updateForm.submitted && name.invalid || ( (name.dirty || name.touched))">
+                        <small class="text-danger" *ngIf="name.errors?.['required']">Name is required.</small>
+                        <small class="text-danger" *ngIf="name.errors?.['minlength']">Name must be at least 3
+                          characters.</small>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}" [(ngModel)]="user.email" required
+                        #email="ngModel" />
+                      <div *ngIf="updateForm.submitted && email.invalid || (email.dirty || email.touched)">
+                        <small class="text-danger" *ngIf="email.errors?.['required']">Email is required.</small>
+                        <small class="text-danger" *ngIf="email.errors?.['pattern']">Invalid email format</small>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="gender" class="form-label d-block">Gender:</label>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" required id="male" value="male"
+                          [(ngModel)]="user.gender">
+                        <label class="form-check-label" for="male">Male</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" required id="female" value="female"
+                          [(ngModel)]="user.gender">
+                        <label class="form-check-label" for="female">Female</label>
+                      </div>
+                      <div *ngIf="updateForm.submitted && (updateForm.controls['gender'].invalid)">
+                        <small class="text-danger">Select any one gender.</small>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="education" class="form-label">Education</label>
+                      <select class="form-select" id="education" name="education" aria-label="Default select example"
+                        [(ngModel)]="user.education" #education="ngModel" required>
+                        <option value="" disabled selected>Select Education...</option>
+                        <option *ngFor="let education of educationList" [value]="education">{{education}}</option>
+                      </select>
+                      <div *ngIf="updateForm.submitted && education.invalid">
+                        <small class="text-danger">Select any one.</small>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" [disabled]="updateForm.invalid"
+                        (click)="onSubmit(updateForm)" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a (click)="deleteUser(user.id)" style="color:#F44336 ; font-size: 19px;"> <i
+              class="fa-solid fa-trash"></i></a>
+          <a class="btn btn-success" (click)="navigateToEditPage(user)">EditOnPage</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-danger" (click)="handleSignOut()">Sign Out</button>
+</div>

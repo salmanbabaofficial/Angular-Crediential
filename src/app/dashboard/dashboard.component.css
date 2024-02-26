@@ -1,0 +1,12 @@
+
+
+.inlineButton{
+    display: inline-block;
+    margin: 0;
+    background: none;
+    border: none;
+}
+
+.saveAll {
+    float: right;
+}

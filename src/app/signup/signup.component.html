@@ -1,0 +1,104 @@
+
+
+
+
+<!-- {{userForm.value| json}} <br> <br> -->
+<!-- {{userModel | json}} -->
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6 box1">
+      <form #signUpForm="ngForm" (ngSubmit)="onSubmit(signUpForm)" novalidate>
+        <h3>Hello!</h3>
+        <label for="form-data" class="form-label">Please signup to continue</label>
+        <div class="form-group">
+          <label for="user_name" class="form-label">Full Name</label>
+          <input type="text" required #name="ngModel" class="form-control" minlength="3" id="userName" name="user_name"
+              placeholder="Enter your user name" [(ngModel)]="userData.full_name">
+          <div *ngIf ="signUpForm.submitted && name.invalid || ( (name.dirty || name.touched))">
+              <small class="text-danger" *ngIf="name.errors?.['required']">Name is required.</small>
+              <small class="text-danger" *ngIf="name.errors?.['minlength']">Name must be at least 3 characters.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" required #email="ngModel" id="email" name="email"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}" placeholder="abc@gmail.com"
+            [(ngModel)]="userData.email">
+            <div *ngIf ="signUpForm.submitted && email.invalid || (email.dirty || email.touched)">
+            <small class="text-danger" *ngIf="email.errors?.['required']">Email is required.</small>
+            <small class="text-danger" *ngIf="email.errors?.['pattern']">Invalid email format</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" required minlength="8" id="password" name="password"
+            placeholder="Enter your password" [(ngModel)]="userData.password" #password="ngModel">
+            <div *ngIf ="signUpForm.submitted && password.invalid || (password.dirty || password.touched)">
+            <small class="text-danger" *ngIf="password.errors?.['required']">Password is required.</small>
+            <small class="text-danger" *ngIf="password.errors?.['minlength']">Password must be at least 8 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" #confirmPassword="ngModel" required minlength="8"
+            id="confirmPassword" name="confirm_password" placeholder="Please confirm your password"
+            [(ngModel)]="userData.confirm_password">
+            <div *ngIf ="signUpForm.submitted && confirmPassword.invalid || (confirmPassword.dirty || confirmPassword.touched)">
+              <small class="text-danger" *ngIf="confirmPassword.errors?.['required']">Confirm password is required.</small>
+              <small class="text-danger" *ngIf ="(userData.password && userData.confirm_password) &&
+               (userData.password !== userData.confirm_password)">Password does not match.</small>
+            </div>
+            
+        </div>
+
+
+
+        <div class="mb-2" style="display: inline-block;  ">
+          <label for="gender" class="gender-label">Gender:</label>
+          <div class="form-check form-check-inline " style="display: inline-block; ">
+              <input class="form-check-input mt-3 " type="radio" name="gender" required #maleGender="ngModel"
+                  id="male" value="male" [(ngModel)]="userData.gender">
+              <label class="form-check-label" for="male">Male</label>
+          </div>
+          <div class="form-check form-check-inline" style="display: inline-block;">
+              <input class="form-check-input mt-3 " type="radio" name="gender" required #femaleGender="ngModel"
+                  id="female" value="female" [(ngModel)]="userData.gender">
+              <label class="form-check-label " for="female">Female</label>
+          </div>
+          <div *ngIf ="signUpForm.submitted && (maleGender.invalid || femaleGender.invalid)">
+              <small class="text-danger">Select any one.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <select class="form-select" id="education" name="education" required
+                  [(ngModel)]="userData.education" aria-label="Default select example" #education="ngModel">
+            <option value="" disabled>Select Education...</option>
+            <option *ngFor="let education of educationList" [value]="education">{{education}}</option>
+          </select>
+          <div *ngIf="signUpForm.submitted && education.invalid">
+            <small class="text-danger">Select any one.</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">SignUp</button>
+        <label class="mt-2">I'm already a member!<a class="link-button " color="primary" 
+          (click)="navigateToLogin()">Sign in</a>
+        </label>
+      </form>
+    </div>
+    <div class="col-6 box2">
+      <img class="img1" src="../../assets/images/login.jpeg" alt="login image">
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+  
+  
+  

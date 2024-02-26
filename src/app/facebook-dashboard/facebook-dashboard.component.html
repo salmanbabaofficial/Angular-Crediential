@@ -1,0 +1,18 @@
+<div class="dashboard-container">
+    <h1>Welcome to your Facebook Dashboard</h1>
+
+    <div class="user-data-container" *ngIf="userData">
+        <div>Welcome,
+            <h2>{{ userData.firstName }} {{ userData.lastName }}</h2>
+        </div>
+        <div class="profile-photo">
+            <img class="profile-picture" src="{{userData.photoUrl}}" alt="Profile Picture">
+        </div>
+        <p><strong>UserId:</strong> {{ userData.id }}</p>
+        <p><strong>First Name</strong> {{ userData.firstName }}</p>
+        <p><strong>Last Name</strong> {{ userData.lastName }}</p>
+        <p><strong>Full Name:</strong> {{ userData.name }}</p>
+
+    </div>
+    <button class="btn btn-danger sign-out-btn" (click)="handleSignOut()">Sign Out</button>
+</div>
