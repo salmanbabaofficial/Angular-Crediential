@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { GoogleDashboardComponent } from './google-dashboard/google-dashboard.component';
-import { UserCardComponent } from './user-card/user-card.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import {
   FacebookLoginProvider
@@ -25,7 +24,6 @@ import { FacebookDashboardComponent } from './facebook-dashboard/facebook-dashbo
     DashboardComponent,
     EditUserComponent,
     GoogleDashboardComponent,
-    UserCardComponent,
     FacebookDashboardComponent
   ],
   imports: [
